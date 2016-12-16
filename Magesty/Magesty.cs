@@ -9,12 +9,15 @@ namespace Magesty
             String spellString = getSpell();
             SpellLinkedList spell = parseSpell(spellString);
             printSpell(spell);
+            Spell mySpell = new Spell(spell);
+            Console.WriteLine("Final Spell");
+            mySpell.printSpell();
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
 
-        static string getSpell()
+        static string getSpell()                                   
         {
             string spellString;
             Console.Write("Enter a spell: ");

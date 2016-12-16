@@ -6,39 +6,73 @@ using System.Threading.Tasks;
 
 namespace Magesty
 {
-    public class GlyphNode
+    public class GlyphNode                                                                                  //Glyphnodes making up a doubly linked list, each carries a glyph
     {
         public GlyphNode prev { get; set; }
         public GlyphNode next { get; set; }
         public Glyph glyph { get; set; }
 
-        public GlyphNode()
+        public GlyphNode()                                                                                  //Glyphnode must be instantiated with a glyph inside
         {
         }
 
-        public GlyphNode(string glyphName)
+        public GlyphNode(string glyphName)                                                                  //Instantiate glyphNodes with glyph depending on magic word
         {
             prev = null;
             next = null;
-            if (glyphName == "aer") { glyph = new AirGlyph(); }
-            else if (glyphName == "ignis") { glyph = new FireGlyph(); }
-            else if (glyphName == "aqua") { glyph = new WaterGlyph(); }
-            else if (glyphName == "massa") { glyph = new EarthGlyph(); }
+            switch(glyphName)                                                                               //Creates nodes with different glyphs dependent upon magic word
+            {
+                case "aer":
+                    glyph = new AirGlyph();
+                    break;
+                case "aqua":
+                    glyph = new WaterGlyph();
+                    break;
+                case "ignis":
+                    glyph = new FireGlyph();
+                    break;
+                case "massa":
+                    glyph = new EarthGlyph();
+                    break;
+                case "lux":
+                    glyph = new LightGlyph();
+                    break;
+                case "tenebris":
+                    glyph = new DarkGlyph();
+                    break;
+                case "vita":
+                    glyph = new LifeGlyph();
+                    break;
+                case "mortem":
+                    glyph = new DeathGlyph();
+                    break;
+                case "tempus":
+                    glyph = new TimeGlyph();
+                    break;
+                case "vacuo":
+                    glyph = new SpaceGlyph();
+                    break;
+                case "cheesus":
+                    glyph = new CheeseGlyph();
+                    break;
+                case "combinus":
+                    glyph = new CombineGlyph();
+                    break;
+                case "trudo":
+                    glyph = new PushGlyph();
+                    break;
+                case "aliud":
+                    glyph = new TargetGlyph("Enemy");
+                    break;
+                default:
+                    Console.WriteLine("That's not a real glyph dude");
+                    break;
+
+            }
             Console.WriteLine("Glyph of type: {0} added!", glyphName);
         }
 
-        public GlyphNode(GlyphNode prev, GlyphNode next, string glyphName)
-        {
-            this.prev = prev;
-            this.next = next;
-            if(glyphName == "aer") { glyph = new AirGlyph(); }
-            else if(glyphName == "ignis") { glyph = new FireGlyph(); }
-            else if(glyphName == "aqua") { glyph = new WaterGlyph(); }
-            else if(glyphName == "massa") { glyph = new EarthGlyph(); }
-            Console.WriteLine("Glyph of type: {0} added!", glyphName);
-        }
-
-        public void printNode(int index)
+        public void printNode(int index)                                                                    //Prints the values of the node, or if it's null
         {
             if (this.glyph != null)
             {
