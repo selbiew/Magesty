@@ -8,7 +8,7 @@ public class Display : MonoBehaviour {
 	int height = 600;
 	int w_x;
 	int w_y;
-	string spellString = "";
+	string glyphString = "";
 	string displayString = "";
 	string battleString = "";
 	Battleground battleground;
@@ -24,7 +24,30 @@ public class Display : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		UpdateSpell();
+	}
 	
+	void UpdateSpell () {
+		string newstring = "";
+		foreach (char c in Input.inputString) {
+			if (c == ' ' || c == '\r'){ //if space or enter
+				glyphString += newstring;
+				//do stuff with the glyph here instead of the following five lines
+				spell = Game.parseSpell(glyphString);
+				displayString = Game.printSpell(spell);
+				mySpell = new Spell(spell);
+				displayString += mySpell.printSpell();
+				glyphString = "";
+				newstring = "";
+			}
+			else {
+				if (c != "\n"[0] && c != "\b"[0]){ //these shouldn't come up but just in case
+					newstring += c;
+				}
+			}
+			
+		}
+		glyphString += newstring;
 	}
 	
 	void OnGUI() {
@@ -32,14 +55,14 @@ public class Display : MonoBehaviour {
 	}
 	
 	void DisplayWindow(int windowID){
-		spellString = GUI.TextField(new Rect(5,25,390,20),spellString);
-		if (GUI.Button(new Rect(150,50,100,20),"Enter Spell") || Input.GetKeyDown(KeyCode.Return)){
-			spell = Game.parseSpell(spellString);
+		GUI.Box(new Rect(5,25,390,20),glyphString);
+		/*if (Input.GetKeyDown(KeyCode.Return)){
+			spell = Game.parseSpell(glyphString);
 			displayString = Game.printSpell(spell);
 			mySpell = new Spell(spell);
 			displayString += mySpell.printSpell();
-			spellString = "";
-		}
+			glyphString = "";
+		*/
 		GUI.Box(new Rect(5,75,390,200),displayString);
 		if (battleString == "") battleString = battleground.printBattleground();
 		GUI.Box(new Rect(5,280,390,200),battleString);
